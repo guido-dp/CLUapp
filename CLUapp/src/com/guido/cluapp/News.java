@@ -27,17 +27,17 @@ public class News extends Fragment {
 	private ProgressBar progressbar = null;
 	private ListView feedListView = null;
 	private View root = null;
-	private getFeedRss asyncgetrss = null;
+	private getFeedsRss asyncgetrss = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		root = inflater.inflate(R.layout.news_fragment, container, false);
 		progressbar = (ProgressBar) root.findViewById(R.id.progressBar);
-		asyncgetrss = new getFeedRss();
+		asyncgetrss = new getFeedsRss();
 		asyncgetrss.execute((Void) null);
 		return root;
 	}
-	public class getFeedRss extends AsyncTask<Void, Void, Boolean> {
+	public class getFeedsRss extends AsyncTask<Void, Void, Boolean> {
 		@Override
         protected void onPreExecute(){
         }
@@ -46,7 +46,7 @@ public class News extends Fragment {
         protected Boolean doInBackground(Void... params) {
             //ESEGUIRE OPERAZIONI IN BACKGROUND
         	try {
-    			URL url = new URL("http://gsnapoli.altervista.org/feed/");
+    			URL url = new URL("http://gsnapoli.altervista.org/category/incontri/feed/");
     			RssFeed feed = RssReader.read(url);
     			feedList=feed.getRssItems();
     		} catch (SAXException e) {
@@ -79,11 +79,10 @@ public class News extends Fragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position,	long id) {
-				Object o = feedListView.getItemAtPosition(position);
-				RssItem newsData = (RssItem) o;
+				String link = feedList.get(position).getLink();
 				
 				Intent intent = new Intent(root.getContext(), FeedDetailsActivity.class);
-				intent.putExtra("feed", newsData);
+				intent.putExtra("feed", link);
 				startActivity(intent);
 			}
 		});

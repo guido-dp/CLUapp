@@ -70,9 +70,9 @@ public class MainActivity extends FragmentActivity {
 		    case 0:  
 		        return fragment = new News();  
 		    case 1:  
-		        return fragment = new News();   
+		        return fragment = new Notices();   
 		    case 2:  
-		        return fragment = new News(); 
+		        return fragment = new Appointments(); 
 		    default:  
 		        break;  
 		    }

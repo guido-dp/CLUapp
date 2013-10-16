@@ -36,17 +36,19 @@ public final class R {
         public static final int list_selector_flatcolor=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000a;
-        public static final int content=0x7f090002;
-        public static final int custom_list=0x7f090009;
-        public static final int date=0x7f090007;
-        public static final int featuredImg=0x7f090000;
-        public static final int pager=0x7f090003;
-        public static final int pager_title_strip=0x7f090004;
-        public static final int progressBar=0x7f090008;
-        public static final int section_label=0x7f090005;
-        public static final int thumbImage=0x7f090006;
-        public static final int title=0x7f090001;
+        public static final int action_settings=0x7f09000c;
+        public static final int content=0x7f090004;
+        public static final int custom_list=0x7f09000b;
+        public static final int date=0x7f090009;
+        public static final int featuredImg=0x7f090002;
+        public static final int layout=0x7f090001;
+        public static final int pager=0x7f090005;
+        public static final int pager_title_strip=0x7f090006;
+        public static final int progressBar=0x7f09000a;
+        public static final int progressBar2=0x7f090000;
+        public static final int section_label=0x7f090007;
+        public static final int thumbImage=0x7f090008;
+        public static final int title=0x7f090003;
     }
     public static final class layout {
         public static final int activity_feed_details=0x7f030000;
