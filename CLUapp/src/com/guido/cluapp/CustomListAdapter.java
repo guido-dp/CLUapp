@@ -15,15 +15,12 @@ import android.widget.TextView;
 public class CustomListAdapter extends BaseAdapter {
 
 	private ArrayList<RssItem> listData;
-
 	private LayoutInflater layoutInflater;
 
-	//private Context mContext;
 	
 	public CustomListAdapter(Context context, ArrayList<RssItem> listData) {
 		this.listData = listData;
 		layoutInflater = LayoutInflater.from(context);
-		//mContext = context;
 	}
 
 	@Override
@@ -55,8 +52,10 @@ public class CustomListAdapter extends BaseAdapter {
 		}
 
 		RssItem newsItem = (RssItem) listData.get(position);
+		
 		holder.headlineView.setText(newsItem.getTitle());
 		holder.reportedDateView.setText(newsItem.getPubDate().toString());
+		
 		String content=newsItem.getContent();
 		if(content.startsWith(convertView.getContext().getString(R.string.prefix))){
 			int sindex=content.indexOf(convertView.getContext().getString(R.string.start_link_img));

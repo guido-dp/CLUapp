@@ -13,7 +13,6 @@ import com.guido.cluapp.rss.RssReader;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,14 +79,11 @@ public class News extends Fragment {
 
 			@Override
 			public void onItemClick(AdapterView<?> a, View v, int position,	long id) {
-				//String link = feedList.get(position).getLink();
+				
 				RssItem rssItem = feedList.get(position);
 				Intent intent = new Intent(root.getContext(), FeedDetailsActivity.class);
 				intent.putExtra("feed", rssItem );
 				
-				/*
-				Intent intent = new Intent(root.getContext(), FeedDetailsActivity.class);
-				intent.putExtra("feed", link);*/
 				startActivity(intent);
 			}
 		});
