@@ -18,6 +18,7 @@ package com.guido.cluapp.rss;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
@@ -47,7 +48,6 @@ public class RssHandler extends DefaultHandler {
 		
 		if(qName.equals("item") && rssFeed != null) {
 			rssItem = new RssItem();
-			//rssItem.setFeed(rssFeed);
 			rssFeed.addRssItem(rssItem);
 		}
 	}
@@ -65,7 +65,7 @@ public class RssHandler extends DefaultHandler {
 			
 			try {
 				if (qName != null && qName.length() > 0) {
-				    String methodName = "set" + qName.substring(0, 1).toUpperCase() + qName.substring(1);
+				    String methodName = "set" + qName.substring(0, 1).toUpperCase(Locale.getDefault()) + qName.substring(1);
 				    Method method = rssFeed.getClass().getMethod(methodName, String.class);
 				    method.invoke(rssFeed, stringBuilder.toString());
 				}
@@ -82,7 +82,7 @@ public class RssHandler extends DefaultHandler {
 			try {
 				if(qName.equals("content:encoded")) 
 					qName = "content";
-				String methodName = "set" + qName.substring(0, 1).toUpperCase() + qName.substring(1);
+				String methodName = "set" + qName.substring(0, 1).toUpperCase(Locale.getDefault()) + qName.substring(1);
 				Method method = rssItem.getClass().getMethod(methodName, String.class);
 				method.invoke(rssItem, stringBuilder.toString());
 			} catch (SecurityException e) {
