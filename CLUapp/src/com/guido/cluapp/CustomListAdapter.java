@@ -57,7 +57,13 @@ public class CustomListAdapter extends BaseAdapter {
 		RssItem newsItem = (RssItem) listData.get(position);
 		holder.headlineView.setText(newsItem.getTitle());
 		holder.reportedDateView.setText(newsItem.getPubDate().toString());
-
+		String content=newsItem.getContent();
+		if(content.startsWith(convertView.getContext().getString(R.string.prefix))){
+			int sindex=content.indexOf(convertView.getContext().getString(R.string.start_link_img));
+			int eindex=content.substring(sindex).indexOf(convertView.getContext().getString(R.string.end_link_img));
+			new ImageDownloaderTask(holder.imageView).execute(content.substring(sindex,sindex+eindex));
+		}
+		
 		return convertView;
 	}
 

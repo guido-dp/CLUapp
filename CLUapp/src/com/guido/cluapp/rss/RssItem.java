@@ -27,13 +27,14 @@ import android.os.Parcelable;
 
 public class RssItem implements Comparable<RssItem>, Parcelable {
 
-	private RssFeed feed;
+	//private RssFeed feed;
 	private String title;
 	private String link;
 	private Date pubDate;
 	private String description;
 	private String content;
-
+	private String comments;
+	
 	public RssItem() {
 		
 	}
@@ -46,7 +47,8 @@ public class RssItem implements Comparable<RssItem>, Parcelable {
 		pubDate = (Date) data.getSerializable("pubDate");
 		description = data.getString("description");
 		content = data.getString("content");
-		feed = data.getParcelable("feed");
+		//feed = data.getParcelable("feed");
+		comments =data.getString("comments");
 		
 	}
 
@@ -59,7 +61,9 @@ public class RssItem implements Comparable<RssItem>, Parcelable {
 		data.putSerializable("pubDate", pubDate);
 		data.putString("description", description);
 		data.putString("content", content);
-		data.putParcelable("feed", feed);
+		//data.putParcelable("feed", feed);
+		data.putString("comments", comments);
+		
 		dest.writeBundle(data);
 	}
 	
@@ -77,14 +81,14 @@ public class RssItem implements Comparable<RssItem>, Parcelable {
 		return 0;
 	}
 	
-	public RssFeed getFeed() {
+	/*public RssFeed getFeed() {
 		return feed;
 	}
 
 	public void setFeed(RssFeed feed) {
 		this.feed = feed;
 	}
-
+*/
 	public String getTitle() {
 		return title;
 	}
@@ -133,7 +137,14 @@ public class RssItem implements Comparable<RssItem>, Parcelable {
 	public void setContent(String content) {
 		this.content = content;
 	}
+	
+	public String getComments() {
+		return comments;
+	}
 
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 	@Override
 	public int compareTo(RssItem another) {
 		if(getPubDate() != null && another.getPubDate() != null) {

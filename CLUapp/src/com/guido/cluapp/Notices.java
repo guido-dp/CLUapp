@@ -46,7 +46,7 @@ public class Notices extends Fragment {
         protected Boolean doInBackground(Void... params) {
             //ESEGUIRE OPERAZIONI IN BACKGROUND
         	try {
-    			URL url = new URL("http://gsnapoli.altervista.org/category/avvisi/feed/");
+    			URL url = new URL(root.getContext().getString(R.string.link_feed_2));
     			RssFeed feed = RssReader.read(url);
     			feedList=feed.getRssItems();
     		} catch (SAXException e) {

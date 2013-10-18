@@ -46,7 +46,7 @@ public class Appointments extends Fragment {
         protected Boolean doInBackground(Void... params) {
             //ESEGUIRE OPERAZIONI IN BACKGROUND
         	try {
-    			URL url = new URL("http://gsnapoli.altervista.org/category/gallery/feed/");
+    			URL url = new URL(root.getContext().getString(R.string.link_feed_3));
     			RssFeed feed = RssReader.read(url);
     			feedList=feed.getRssItems();
     		} catch (SAXException e) {

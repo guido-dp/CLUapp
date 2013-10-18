@@ -14,14 +14,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class FeedDetailsActivity extends Activity {
 
 	private RssItem feed;
-	private String link;
-	private getFeedRss asyncgetrss = null;
+	//private String link;
+	//private getFeedRss asyncgetrss = null;
 	private ProgressBar progressbar = null;
 	private View layout = null;
 	
@@ -29,18 +30,34 @@ public class FeedDetailsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_feed_details);
-
-		link = this.getIntent().getStringExtra("feed");
+		progressbar = (ProgressBar) findViewById(R.id.progressBar2);
+		layout = (View) findViewById(R.id.layout);
+		
+		feed = (RssItem) getIntent().getParcelableExtra("feed");
+		
+		String content=new String(feed.getContent());
+		ImageView thumb = (ImageView) findViewById(R.id.featuredImg);
+		if(content.startsWith(layout.getContext().getString(R.string.prefix))){
+			int sindex=content.indexOf(layout.getContext().getString(R.string.start_link_img));
+			int eindex=content.substring(sindex).indexOf(layout.getContext().getString(R.string.end_link_img));
+			new ImageDownloaderTask(thumb).execute(content.substring(sindex,sindex+eindex));
+		}
+		TextView title = (TextView) findViewById(R.id.title);
+		title.setText(feed.getTitle());
+		TextView htmlTextView = (TextView) findViewById(R.id.content);
+		htmlTextView.setText(Html.fromHtml(feed.getContent(), null, null));
+		layout.setVisibility(View.VISIBLE);
+		progressbar.setVisibility(View.GONE);
+		/*link = this.getIntent().getStringExtra("feed");
 		
 		if (null != link) {
 			progressbar = (ProgressBar) findViewById(R.id.progressBar2);
 			layout = (View) findViewById(R.id.layout);
 			asyncgetrss = new getFeedRss();
-			asyncgetrss.execute((Void) null);
-			
-		}
+			asyncgetrss.execute((Void) null);	
+		}*/
 	}
-	public class getFeedRss extends AsyncTask<Void, Void, Boolean> {
+	/*public class getFeedRss extends AsyncTask<Void, Void, Boolean> {
 		@Override
         protected void onPreExecute(){
         }
@@ -52,6 +69,14 @@ public class FeedDetailsActivity extends Activity {
     			URL url = new URL(link + "feed/?withoutcomments=1");
     			RssFeed rssfeed = RssReader.read(url);
     			feed=rssfeed.getRssItems().get(0);
+    			String content=feed.getContent();
+    			ImageView thumb = (ImageView) findViewById(R.id.featuredImg);
+    			if(content.startsWith(layout.getContext().getString(R.string.prefix))){
+    				int sindex=content.indexOf(layout.getContext().getString(R.string.start_link_img));
+    				int eindex=content.substring(sindex).indexOf(layout.getContext().getString(R.string.end_link_img));
+    				new ImageDownloaderTask(thumb).execute(content.substring(sindex,sindex+eindex));
+    			}
+    			
     		} catch (SAXException e) {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
@@ -64,8 +89,7 @@ public class FeedDetailsActivity extends Activity {
  
         @Override
         protected void onPostExecute(final Boolean success) {
-        	//ImageView thumb = (ImageView) findViewById(R.id.featuredImg);
-			TextView title = (TextView) findViewById(R.id.title);
+        	TextView title = (TextView) findViewById(R.id.title);
 			title.setText(feed.getTitle());
 			TextView htmlTextView = (TextView) findViewById(R.id.content);
 			htmlTextView.setText(Html.fromHtml(feed.getContent(), null, null));
@@ -78,7 +102,7 @@ public class FeedDetailsActivity extends Activity {
         	asyncgetrss = null;
         }
 	}
-	/*@Override
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main, menu);
