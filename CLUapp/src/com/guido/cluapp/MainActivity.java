@@ -63,13 +63,21 @@ public class MainActivity extends FragmentActivity {
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
 			Fragment fragment = new Fragment();  
+			fragment = new Page();
+	    	Bundle args = new Bundle();
 		    switch (position) {  
-		    case 0:  
-		        return fragment = new News();  
+		    case 0: 
+		    	args.putString("linkFeed", getString(R.string.link_feed_1));
+		    	fragment.setArguments(args);;
+		    	return fragment;
 		    case 1:  
-		        return fragment = new News();   
-		    case 2:  
-		        return fragment = new News(); 
+		    	args.putString("linkFeed", getString(R.string.link_feed_1));
+		    	fragment.setArguments(args);;
+		    	return fragment;   
+		    case 2:
+		    	args.putString("linkFeed", getString(R.string.link_feed_1));
+		    	fragment.setArguments(args);;
+		    	return fragment; 
 		    default:  
 		        break;  
 		    }

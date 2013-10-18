@@ -22,16 +22,18 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class News extends Fragment {
+public class Page extends Fragment {
 	private ArrayList<RssItem> feedList = null;
 	private ProgressBar progressbar = null;
 	private ListView feedListView = null;
 	private View root = null;
 	private getFeedsRss asyncgetrss = null;
+	private String linkFeed = null;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		root = inflater.inflate(R.layout.news_fragment, container, false);
+		linkFeed=getArguments().getString("linkFeed");
+		root = inflater.inflate(R.layout.page_layout, container, false);
 		progressbar = (ProgressBar) root.findViewById(R.id.progressBar);
 		asyncgetrss = new getFeedsRss();
 		asyncgetrss.execute((Void) null);
@@ -46,7 +48,7 @@ public class News extends Fragment {
         protected Boolean doInBackground(Void... params) {
             //ESEGUIRE OPERAZIONI IN BACKGROUND
         	try {
-    			URL url = new URL(root.getContext().getString(R.string.link_feed_1));
+    			URL url = new URL(linkFeed);
     			RssFeed feed = RssReader.read(url);
     			feedList=feed.getRssItems();
     		} catch (SAXException e) {
