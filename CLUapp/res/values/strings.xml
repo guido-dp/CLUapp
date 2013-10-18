@@ -7,8 +7,8 @@
     <string name="title_section2">Avvisi</string>
     <string name="title_section3">Gallery</string>
     <string name="link_feed_1">http://gsnapoli.altervista.org/category/incontri/feed/</string>
-	<string name="link_feed_2">http://gsnapoli.altervista.org/category/incontri/feed/</string>
-	<string name="link_feed_3">http://gsnapoli.altervista.org/category/incontri/feed/</string>      
+	<string name="link_feed_2">http://gsnapoli.altervista.org/category/avvisi/feed/</string>
+	<string name="link_feed_3">http://gsnapoli.altervista.org/category/gallery/feed/</string>      
 	<string name="prefix">&lt;p&gt;&lt;img</string>
 	<string name="start_link_img">http</string>
 	<string name="end_link_img">\"</string>

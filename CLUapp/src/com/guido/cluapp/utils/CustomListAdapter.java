@@ -1,7 +1,11 @@
-package com.guido.cluapp;
+package com.guido.cluapp.utils;
 
 import java.util.ArrayList;
 
+import com.guido.cluapp.R;
+import com.guido.cluapp.R.id;
+import com.guido.cluapp.R.layout;
+import com.guido.cluapp.R.string;
 import com.guido.cluapp.rss.RssItem;
 
 import android.content.Context;

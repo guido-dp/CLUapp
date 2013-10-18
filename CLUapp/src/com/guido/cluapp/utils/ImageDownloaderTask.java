@@ -1,4 +1,4 @@
-package com.guido.cluapp;
+package com.guido.cluapp.utils;
 
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
@@ -6,6 +6,10 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
+
+import com.guido.cluapp.R;
+import com.guido.cluapp.R.drawable;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.http.AndroidHttpClient;
@@ -13,7 +17,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
-class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
+public class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
 	private final WeakReference<ImageView> imageViewReference;
 
 	public ImageDownloaderTask(ImageView imageView) {

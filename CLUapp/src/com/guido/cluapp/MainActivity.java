@@ -2,7 +2,14 @@ package com.guido.cluapp;
 
 import java.util.Locale;
 
+import com.guido.cluapp.utils.ConnectionDetector;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -26,22 +33,40 @@ public class MainActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-
+	
+	Boolean isInternetPresent;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		// Create the adapter that will return a fragment for each of the three
-		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-		// Set up the ViewPager with the sections adapter.
-		mViewPager = (ViewPager) findViewById(R.id.pager);
-		mViewPager.setAdapter(mSectionsPagerAdapter);
-
+		// flag for Internet connection status
+		isInternetPresent = false;
 	}
+	
+	protected void onStart() {
+	    super.onStart();  // Always call the superclass method first
+	    	// Connection detector
+	 		ConnectionDetector cd=new ConnectionDetector(getApplicationContext());;
+	 		// get Internet status
+	         isInternetPresent = cd.isConnectingToInternet();
+	         // check for Internet status
+	         if (!isInternetPresent) {
+	             // Internet connection is not present
+	             // Ask user to connect to Internet
+	             showNetErrAlertDialog(MainActivity.this, "No Internet Connection",
+	                     "You don't have internet connection.");
+	         }else{
+	        	// Create the adapter that will return a fragment for each of the three
+	     		// primary sections of the app.
+	     		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
+	     		// Set up the ViewPager with the sections adapter.
+	     		mViewPager = (ViewPager) findViewById(R.id.pager);
+	     		mViewPager.setAdapter(mSectionsPagerAdapter); 
+	         }
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -71,11 +96,11 @@ public class MainActivity extends FragmentActivity {
 		    	fragment.setArguments(args);;
 		    	return fragment;
 		    case 1:  
-		    	args.putString("linkFeed", getString(R.string.link_feed_1));
+		    	args.putString("linkFeed", getString(R.string.link_feed_2));
 		    	fragment.setArguments(args);;
 		    	return fragment;   
 		    case 2:
-		    	args.putString("linkFeed", getString(R.string.link_feed_1));
+		    	args.putString("linkFeed", getString(R.string.link_feed_3));
 		    	fragment.setArguments(args);;
 		    	return fragment; 
 		    default:  
@@ -105,4 +130,33 @@ public class MainActivity extends FragmentActivity {
 			return null;
 		}
 	}
+	/**
+	     * Function to display simple Alert Dialog
+	     * @param context - application context
+	     * @param title - alert dialog title
+	     * @param message - alert message
+	     * */
+		public void showNetErrAlertDialog(Context context, String title, String message) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(context);
+			// Setting Dialog Title
+			builder.setTitle(title)
+			// Setting Dialog Message
+	        .setMessage(message)
+	        // Setting alert dialog icon
+	        .setIcon(android.R.drawable.ic_dialog_alert)
+	        .setCancelable(false)
+	        .setNegativeButton("Close",new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	            	MainActivity.this.finish();
+	            }
+	        })
+			.setPositiveButton("Connect",new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int id) {
+	            	Intent i = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+	                startActivity(i);
+	            }
+	        });
+	        AlertDialog alert = builder.create();
+	        alert.show();
+	    }
 }

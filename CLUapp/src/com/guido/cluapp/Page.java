@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 import com.guido.cluapp.rss.RssFeed;
 import com.guido.cluapp.rss.RssItem;
 import com.guido.cluapp.rss.RssReader;
+import com.guido.cluapp.utils.CustomListAdapter;
 
 import android.content.Intent;
 import android.os.AsyncTask;

@@ -1,6 +1,8 @@
 package com.guido.cluapp;
 
 import com.guido.cluapp.rss.RssItem;
+import com.guido.cluapp.utils.ImageDownloaderTask;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Html;
