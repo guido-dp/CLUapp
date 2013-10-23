@@ -4,8 +4,7 @@ CLUapp
 Notices,News and Appointments
 
 Roadmap
-|X|    download image thumb
-|X|    ask for internet connection on start
+|X|    download image thumb|X|    ask for internet connection on start
 |X|      ottimization of th code
 | |    notification
 | |      ottimization of th code
