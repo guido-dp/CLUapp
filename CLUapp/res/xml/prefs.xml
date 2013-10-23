@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
  <PreferenceCategory
-   android:summary="Username and password information"
-   android:title="Login information" >
-  <EditTextPreference
-     android:key="interval"
-     android:summary="intervallo"
-     android:title="intervallo" />
+   android:summary="settings"
+   android:title="Notification service" >
+  <com.guido.cluapp.utils.NumberPickerDialogPreference
+        android:defaultValue="3"
+        android:dialogMessage="Please select the interval in mitutes:"
+        android:max="50"
+        android:key="interval"
+        android:title="Update Interval"
+        custom:min="3" />
  </PreferenceCategory>
  </PreferenceScreen>

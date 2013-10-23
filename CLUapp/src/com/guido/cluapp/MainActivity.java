@@ -82,8 +82,8 @@ public class MainActivity extends FragmentActivity {
 	    super.onResume();
 	    Toast toast = Toast.makeText(getBaseContext(), "Notification Service", Toast.LENGTH_SHORT);
     	toast.show();
-	    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-	    int minutes = 10; //prefs.getInt("interval",3);
+	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	    int minutes = prefs.getInt("interval",5);
 	    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 	    Intent i = new Intent(this, NotificationService.class);
 	    PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
@@ -106,8 +106,8 @@ public class MainActivity extends FragmentActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		 switch (item.getItemId()) {
 	        case R.id.action_settings:
-	        	//Intent intent = new Intent(MainActivity.this, FragmentPreferences.class);
-				//startActivity(intent);
+	        	Intent intent = new Intent(MainActivity.this, FragmentPreferences.class);
+				startActivity(intent);
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);

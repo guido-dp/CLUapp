@@ -17,8 +17,8 @@ public class BootReciver extends BroadcastReceiver {
 	    // Note that a BroadcastReceiver is *NOT* a Context. Thus, we can't use
 	    // "this" whenever we need to pass a reference to the current context.
 	    // Thankfully, Android will supply a valid Context as the first parameter
-	    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-	    int minutes =10; //prefs.getInt("interval",3);
+	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+	    int minutes = prefs.getInt("interval",5);
 	    AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 	    Intent i = new Intent(context, NotificationService.class);
 	    PendingIntent pi = PendingIntent.getService(context, 0, i, 0);

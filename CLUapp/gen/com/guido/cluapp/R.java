@@ -9,6 +9,14 @@ package com.guido.cluapp;
 
 public final class R {
     public static final class attr {
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int min=0x7f010000;
     }
     public static final class color {
         public static final int list_row_default_bg=0x7f050003;
@@ -36,16 +44,18 @@ public final class R {
         public static final int list_selector_flatcolor=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a000b;
+        public static final int action_settings=0x7f0a000d;
         public static final int content=0x7f0a0004;
         public static final int custom_list=0x7f0a000a;
         public static final int date=0x7f0a0008;
         public static final int featuredImg=0x7f0a0002;
         public static final int layout=0x7f0a0001;
+        public static final int number_picker=0x7f0a000c;
         public static final int pager=0x7f0a0005;
         public static final int pager_title_strip=0x7f0a0006;
         public static final int progressBar=0x7f0a0009;
         public static final int progressBar2=0x7f0a0000;
+        public static final int text_dialog_message=0x7f0a000b;
         public static final int thumbImage=0x7f0a0007;
         public static final int title=0x7f0a0003;
     }
@@ -54,6 +64,7 @@ public final class R {
         public static final int activity_main=0x7f030001;
         public static final int list_row_layout=0x7f030002;
         public static final int page_layout=0x7f030003;
+        public static final int preference_number_picker_dialog=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f090000;
@@ -103,4 +114,41 @@ public final class R {
     public static final class xml {
         public static final int prefs=0x7f040000;
     }
+    public static final class styleable {
+        /**  note: to re-use an existing Android attribute not already used by the superclass, name should have prefix "android:" and do not define a format 
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #NumberPickerDialogPreference_android_max android:max}</code></td><td></td></tr>
+           <tr><td><code>{@link #NumberPickerDialogPreference_min com.guido.cluapp:min}</code></td><td></td></tr>
+           </table>
+           @see #NumberPickerDialogPreference_android_max
+           @see #NumberPickerDialogPreference_min
+         */
+        public static final int[] NumberPickerDialogPreference = {
+            0x01010136, 0x7f010000
+        };
+        /**
+          <p>This symbol is the offset where the {@link android.R.attr#max}
+          attribute's value can be found in the {@link #NumberPickerDialogPreference} array.
+          @attr name android:max
+        */
+        public static final int NumberPickerDialogPreference_android_max = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.guido.cluapp.R.attr#min}
+          attribute's value can be found in the {@link #NumberPickerDialogPreference} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.guido.cluapp:min
+        */
+        public static final int NumberPickerDialogPreference_min = 1;
+    };
 }
