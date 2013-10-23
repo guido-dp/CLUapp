@@ -5,10 +5,12 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="18" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:allowBackup="true"
@@ -25,6 +27,13 @@
             </intent-filter>
         </activity>
         <activity android:name="FeedDetailsActivity"></activity>
+        <receiver android:name=".service.BootReciver">
+        <intent-filter>
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+        </intent-filter>
+    </receiver>
+        <service android:name=".service.NotificationService" android:permission="android.permission.WAKE_LOCK"></service>
+        <activity android:name="FragmentPreferences"></activity>
     </application>
 
 </manifest>

@@ -2,13 +2,19 @@ package com.guido.cluapp;
 
 import java.util.Locale;
 
+import com.guido.cluapp.service.NotificationService;
 import com.guido.cluapp.utils.ConnectionDetector;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +22,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
 
@@ -33,7 +41,9 @@ public class MainActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-	
+	/**
+	 * The {@link isInternetPresent} is a flag.
+	 */
 	Boolean isInternetPresent;
 	
 	@Override
@@ -68,10 +78,40 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	@Override
+	public void onResume() {
+	    super.onResume();
+	    Toast toast = Toast.makeText(getBaseContext(), "Notification Service", Toast.LENGTH_SHORT);
+    	toast.show();
+	    //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+	    int minutes = 10; //prefs.getInt("interval",3);
+	    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+	    Intent i = new Intent(this, NotificationService.class);
+	    PendingIntent pi = PendingIntent.getService(this, 0, i, 0);
+	    am.cancel(pi);
+	    // by my own convention, minutes <= 0 means notifications are disabled
+	    if (minutes > 0) {
+	        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+	            SystemClock.elapsedRealtime() + minutes*1000,
+	            minutes*1000, pi);
+	    }
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		 switch (item.getItemId()) {
+	        case R.id.action_settings:
+	        	//Intent intent = new Intent(MainActivity.this, FragmentPreferences.class);
+				//startActivity(intent);
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 	/**

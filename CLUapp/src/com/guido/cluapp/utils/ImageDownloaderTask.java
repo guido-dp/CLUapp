@@ -8,8 +8,6 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 
 import com.guido.cluapp.R;
-import com.guido.cluapp.R.drawable;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.http.AndroidHttpClient;
