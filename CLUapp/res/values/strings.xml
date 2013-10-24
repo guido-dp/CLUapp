@@ -6,6 +6,8 @@
     <string name="title_section1">Incontri</string>
     <string name="title_section2">Avvisi</string>
     <string name="title_section3">Gallery</string>
+    <string name="last_modified">Last-Modified</string>
+    <string name="last_modified_default">Fri, 31 Dec 1999 23:59:59 GMT</string>
     <string name="link_feed_1">http://gsnapoli.altervista.org/category/incontri/feed/</string>
 	<string name="link_feed_2">http://gsnapoli.altervista.org/category/avvisi/feed/</string>
 	<string name="link_feed_3">http://gsnapoli.altervista.org/category/gallery/feed/</string>      

@@ -1,5 +1,10 @@
 package com.guido.cluapp.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -14,7 +19,9 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.ParseException;
 import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.IBinder;
@@ -70,17 +77,7 @@ public class NotificationService extends Service {
         protected void onPostExecute(Boolean result) {
         	
         	if(result){
-        	NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-        	builder.setContentTitle("New Notification");
-        	builder.setContentText("Testing notification");
-        	builder.setNumber(1);
-        	builder.setSmallIcon(android.R.drawable.stat_notify_error);
-        	Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
-        	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        	PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, 0);
-        	builder.setContentIntent(contentIntent);
-        	notificationManager=(NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        	notificationManager.notify(1, builder.build());
+        		createNotification();
         	}
             stopSelf();
         }
@@ -115,7 +112,23 @@ public class NotificationService extends Service {
         super.onDestroy();
         mWakeLock.release();
     }
+    
+    private void createNotification(){
+    	NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+    	builder.setContentTitle("New Notification");
+    	builder.setContentText("Testing notification");
+    	builder.setNumber(1);
+    	builder.setSmallIcon(android.R.drawable.stat_notify_error);
+    	Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
+    	notificationIntent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+    	PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, notificationIntent, 0);
+    	builder.setContentIntent(contentIntent);
+    	notificationManager=(NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+    	notificationManager.notify(1, builder.build());
+    }
+
     private Boolean checkUpdate() {
+    	//Http HEAD
     	String url = getApplicationContext().getString(R.string.link_feed_1);
 	    final AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
 		final HttpHead headRequest = new HttpHead(url);
@@ -127,11 +140,34 @@ public class NotificationService extends Service {
 						+ " while retrieving update from " + url);
 				return false;
 			}
+			// Last-Modified tag from header
 			final Header header = response.getFirstHeader("Last-Modified");
 			if (header != null) {
-					Log.e("Last-Modified",header.toString());
-					return true;
-					//TODO check date
+					String datalastmod = header.toString();
+					datalastmod=datalastmod.substring(15); //"Last-Modified "
+					Log.i("Last-Modified",datalastmod);
+					SimpleDateFormat format = new SimpleDateFormat(
+					        "EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+					format.setTimeZone(TimeZone.getTimeZone("GMT"));
+					try {  
+					    Date date = format.parse(datalastmod);
+					    SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+				    			getString(R.string.app_name), Context.MODE_PRIVATE);
+					    String defaultValue = getResources().getString(R.string.last_modified_default);
+					    Date datesaved = format.parse(sharedPref.getString(getString(R.string.last_modified), defaultValue));
+					    //check date
+					    if(date.after(datesaved)){
+					    	SharedPreferences.Editor editor = sharedPref.edit();
+					    	editor.putString(getString(R.string.last_modified), datalastmod.toString());
+					    	editor.commit();
+					    	return true;
+					    }else{
+					    	return false;
+					    }
+					} catch (ParseException e) {  
+					    // TODO Auto-generated catch block  
+					    e.printStackTrace();  
+					}
 			}
 		} catch (Exception e) {
 			// Could provide a more explicit error message for IOException or
@@ -145,6 +181,6 @@ public class NotificationService extends Service {
 		}
 		return false;
 	}
-
+    
 
 }
