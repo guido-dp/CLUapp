@@ -18,7 +18,7 @@ public class BootReciver extends BroadcastReceiver {
 	    // "this" whenever we need to pass a reference to the current context.
 	    // Thankfully, Android will supply a valid Context as the first parameter
 	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-	    int minutes = prefs.getInt("interval",5);
+	    int minutes = prefs.getInt("interval",15);
 	    AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 	    Intent i = new Intent(context, NotificationService.class);
 	    PendingIntent pi = PendingIntent.getService(context, 0, i, 0);
@@ -26,7 +26,7 @@ public class BootReciver extends BroadcastReceiver {
 	    // by my own convention, minutes <= 0 means notifications are disabled
 	    if (minutes > 0) {
 	        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-	            SystemClock.elapsedRealtime() + minutes*1000,
+	            SystemClock.elapsedRealtime() + minutes*1000,//TODO second to minutes
 	            minutes*1000, pi);
 	    }
 	}

@@ -23,7 +23,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
 
@@ -80,8 +79,7 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	public void onResume() {
 	    super.onResume();
-	    Toast toast = Toast.makeText(getBaseContext(), "Notification Service", Toast.LENGTH_SHORT);
-    	toast.show();
+	    
 	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 	    int minutes = prefs.getInt("interval",5);
 	    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -91,7 +89,7 @@ public class MainActivity extends FragmentActivity {
 	    // by my own convention, minutes <= 0 means notifications are disabled
 	    if (minutes > 0) {
 	        am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-	            SystemClock.elapsedRealtime() + minutes*1000,
+	            SystemClock.elapsedRealtime() + minutes*1000, //TODO SECONDS IN MINUTES
 	            minutes*1000, pi);
 	    }
 	}
